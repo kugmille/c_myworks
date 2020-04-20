@@ -39,11 +39,9 @@ void retirement (int startAge, double initial_save, retire_info working, retire_
       printf(" Age %3d month %2d you have $%.2lf\n", (monthcount / 12), (monthcount % 12), (initial_save));
       initial_save= cal_acc(initial_save, retired);
 
-    
-    return;
+    }
 }
-
-int main(){
+ int main(void) {
 
   retire_info working;
   working.months = 489; 
@@ -56,5 +54,6 @@ int main(){
   retired.rate_return = (0.01 / 12.0);
 
   retirement( 327, 21345, working, retired);
-  return 0;
+
+  return EXIT_SUCCESS;
 }
