@@ -22,49 +22,64 @@ struct rectangle_st{
   int width;
   int height;
 };
-
 typedef struct rectangle_st rectangle;
-
 
 rectangle canonicalize(rectangle r) {
   //WRITE THIS FUNCTION
   if (r.width < 0){
-    r.x= r.x + r.width;
-    r.width= (-1*r.width);
+    r.x = r.x + r.width;
+    r.width = (-1*r.width);
   }
   if (r.height < 0) {
-    r.y= r.y + r.height;
-    r.height= (-1*r.height);
+    r.y = r.y + r.height;
+    r.height = (-1*r.height);
   }
   return r;
 }
 
-rectangle checker(rectangle r) {
-  if( r.width < 0 || r.height< 0){
-    r.width=0;
-    r.height=0;
-    return r;
+// checker function is created to find corner case and initialize zero
+/*rectangle checker(rectangle r1,rectangle r2) {
+  rectangle over; //return value
+  
+  if( ((r1.x + r1.width < r2.x) || (r2.x + r2.width < r1.x)) || ((r1.y + r1.height < r2.y) || (r2.y + r2.height < r1.y)) ) {
+    over.x= 0;
+    over.y= 0;
+    over.width= 0;
+    over.height= 0;
+    
+    return over;
   }
   else{
-  return r;
-  }
-}
+    return over;
+      }
+      }*/
 
 
 rectangle intersection(rectangle r1, rectangle r2) {
   //WRITE THIS FUNCTION
-
-  r1= canonicalize(r1);
-  r2= canonicalize(r2);
   rectangle overlap;
 
+  
+  r1= canonicalize(r1);
+  r2= canonicalize(r2);
+  
+  //  overlap= checker(r1,r2);
+    if (((r1.x + r1.width < r2.x) || (r2.x+r2.width < r1.x)) || ((r1.y + r1.height < r2.y) || (r2.y + r2.height < r1.y))){
+    overlap.x=0;
+    overlap.y=0;
+    overlap.width=0;
+    overlap.height=0;
+
+    return overlap;
+    }
+		   
   overlap.x= max(r1.x,r2.x);
   overlap.y= max(r1.y,r2.y);
 
-  overlap.width= min(r1.x+r1.width, r2.x+r2.width)- overlap.width;
-  overlap.height= min(r1.y+r1.height, r2.y+r2.height)- overlap.height;
+  overlap.width= min(r1.x + r1.width, r2.x + r2.width)- overlap.x;
+  overlap.height= min(r1.y + r1.height, r2.y + r2.height)- overlap.y;
 
-  overlap = checker(overlap);
+  // overlap = checker(overlap);
  
   return overlap;
 }
@@ -184,6 +199,7 @@ int main (void) {
   printRectangle(i);
 
 
-  return EXIT_SUCCESS;
 
+ return EXIT_SUCCESS;
+  
 }
